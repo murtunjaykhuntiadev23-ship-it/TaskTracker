@@ -1,0 +1,44 @@
+﻿@model List<TaskTracker.Models.TaskItem>
+@{
+    ViewData["Title"] = "My Tasks";
+}
+
+<h2>My Tasks</h2>
+@* <a asp-action="Create" class="btn btn-primary mb-3">Add Task</a> *@
+<div class="d-flex mb-3 gap-2">
+    <a asp-action="Create" class="btn btn-primary">Add Task</a>
+
+    <form asp-action="Index" method="get" class="d-flex gap-2">
+        <input type="text" name="search" value="@ViewData["Search"]"
+               class="form-control" placeholder="Search tasks..." />
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+    </form>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Title</td>
+                <td>@t.Description</td>
+                <td>@t.Status</td>
+                <td>@t.CreatedAt.ToString("dd MMM yyyy")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@t.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@t.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
